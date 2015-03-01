@@ -92,7 +92,5 @@ list(records).concat() -> record
 
   assert.deepEqual(records, copy,
     'should not alter original list.');
-
-  assert.end();
 ```
 
