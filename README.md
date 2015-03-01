@@ -34,7 +34,7 @@ assert.equal(Array.isArray(val), false,
 
 Take a list of keys and return a filtered list of records which contain those keys. Exclude any records that don't contain any of the whitelisted keys.
 
-### usage
+### Usage
 
 list(records).whitelist(whitelist) -> records
 
