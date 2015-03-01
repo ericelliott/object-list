@@ -6,6 +6,25 @@ Work with arrays of objects. A single object from an `object-list` is called a r
 
 Developer preview. I have a feeling this is duplicated effort. Please open an issue if you know of a great library for this.
 
+## Getting Started
+
+Install:
+
+```
+$ npm install object-list
+```
+
+Use:
+
+```
+var list = require('object-list');
+
+var records = [{a: 'a'}, {b: 'b'},{c: 'c'}];
+
+list(records).getByKey('a'); // -> 'a'
+```
+
+
 ## .getByKey()
 
 Take a key name and return the first value found. Returns a single value, not an array.
