@@ -15,18 +15,25 @@ Take a key name and return the first value found. Returns a single value, not an
 list(records).getByKey(key) -> val
 
 ```js
-var val = list([
+var
+records = [
   {a: 'a'},
   {b: 'b'},
   {c: 'c'}
-]).getByKey('a');
+],
+expected = 'a',
+copy = slice.call(records),
 
-assert.equal(val, 'a',
-'should return the first value it finds');
+val = list(records).getByKey('a');
+
+assert.equal(val, expected,
+'should return the first value it finds.');
 
 assert.equal(Array.isArray(val), false,
 'should only return a single result, not an array.');
 
+assert.deepEqual(records, copy,
+'should not alter original list.');
 ```
 
 
@@ -39,26 +46,33 @@ Take a list of keys and return a filtered list of records which contain those ke
 list(records).whitelist(whitelist) -> records
 
 ```js
-  var whitelisted = list([
-      {a: 'a'},
-      {b: 'b'},
-      {c: 'c'},
-      {d: 'd', a: 'a'}
-    ]).whitelist(['a', 'c']),
+var
+records = [
+  {a: 'a'},
+  {b: 'b'},
+  {c: 'c'},
+  {d: 'd', a: 'a'}
+],
+copy = slice.call(records),
 
-    expected = [
-      {a: 'a'},
-      {c: 'c'},
-      {d: 'd', a: 'a'}
-    ],
+whitelisted = list(records).whitelist(['a', 'c']),
 
-    missing = list(expected).getByKey('b');
+expected = [
+  {a: 'a'},
+  {c: 'c'},
+  {d: 'd', a: 'a'}
+],
 
-  assert.deepEqual(whitelisted, expected,
-    'should contain all the expected keys.');
+missing = list(expected).getByKey('b');
 
-  assert.strictEqual(missing, undefined,
-    'should not contain excluded keys');
+assert.deepEqual(whitelisted, expected,
+'should contain all the expected keys.');
+
+assert.strictEqual(missing, undefined,
+'should not contain excluded keys');
+
+assert.deepEqual(records, copy,
+'should not alter original list.');
 ```
 
 
@@ -71,26 +85,27 @@ Mix a list into a single record.
 list(records).concat() -> record
 
 ```js
-  var
-    records = [
-      {a: 'a'},
-      {b: 'b'},
-      {c: 'c'},
-      {c: 'override'}
-    ],
-    copy = slice.call(records),
-    obj = list(records).concat(),
+var
+records = [
+  {a: 'a'},
+  {b: 'b'},
+  {c: 'c'},
+  {c: 'override'}
+],
+copy = slice.call(records),
 
-    expected = {
-      a: 'a',
-      b: 'b',
-      c: 'override'
-    };
+record = list(records).concat(),
 
-  assert.deepEqual(obj, expected,
-    'should combine records similar to Object.assign()');
+expected = {
+  a: 'a',
+  b: 'b',
+  c: 'override'
+};
 
-  assert.deepEqual(records, copy,
-    'should not alter original list.');
+assert.deepEqual(record, expected,
+'should combine records similar to Object.assign()');
+
+assert.deepEqual(records, copy,
+'should not alter original list.');
 ```
 

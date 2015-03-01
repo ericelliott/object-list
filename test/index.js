@@ -16,6 +16,7 @@ test('.getByKey()', function (assert) {
     ],
     expected = 'a',
     copy = slice.call(records),
+
     val = list(records).getByKey('a');
 
   assert.equal(val, expected,
@@ -39,6 +40,7 @@ test('.whitelist()', function (assert) {
       {d: 'd', a: 'a'}
     ],
     copy = slice.call(records),
+
     whitelisted = list(records).whitelist(['a', 'c']),
 
     expected = [
@@ -70,7 +72,8 @@ test('.concat()', function (assert) {
       {c: 'override'}
     ],
     copy = slice.call(records),
-    obj = list(records).concat(),
+
+    record = list(records).concat(),
 
     expected = {
       a: 'a',
@@ -78,7 +81,7 @@ test('.concat()', function (assert) {
       c: 'override'
     };
 
-  assert.deepEqual(obj, expected,
+  assert.deepEqual(record, expected,
     'should combine records similar to Object.assign()');
 
   assert.deepEqual(records, copy,
