@@ -1,0 +1,29 @@
+{
+  "name": "object-list",
+  "version": "1.0.0",
+  "description": "Work with arrays of objects.",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test/index.js",
+    "lint": "jshint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ericelliott/object-list.git"
+  },
+  "keywords": [
+    "array",
+    "collection",
+    "list"
+  ],
+  "author": "Eric Elliott",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ericelliott/object-list/issues"
+  },
+  "homepage": "https://github.com/ericelliott/object-list",
+  "devDependencies": {
+    "jshint": "^2.6.3",
+    "tape": "^3.5.0"
+  }
+}
