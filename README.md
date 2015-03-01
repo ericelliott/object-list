@@ -16,7 +16,7 @@ $ npm install object-list
 
 Use:
 
-```
+```js
 var list = require('object-list');
 
 var records = [{a: 'a'}, {b: 'b'},{c: 'c'}];
