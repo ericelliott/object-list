@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "tape test/index.js",
-    "lint": "jshint ."
+    "lint": "jshint .",
+    "validate": "npm run lint && npm test"
   },
   "repository": {
     "type": "git",

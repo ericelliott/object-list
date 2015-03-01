@@ -61,3 +61,38 @@ list(records).whitelist(whitelist) -> records
     'should not contain excluded keys');
 ```
 
+
+## .concat()
+
+Mix a list into a single record.
+
+### usage
+
+list(records).concat() -> record
+
+```js
+  var
+    records = [
+      {a: 'a'},
+      {b: 'b'},
+      {c: 'c'},
+      {c: 'override'}
+    ],
+    copy = slice.call(records),
+    obj = list(records).concat(),
+
+    expected = {
+      a: 'a',
+      b: 'b',
+      c: 'override'
+    };
+
+  assert.deepEqual(obj, expected,
+    'should combine records similar to Object.assign()');
+
+  assert.deepEqual(records, copy,
+    'should not alter original list.');
+
+  assert.end();
+```
+
