@@ -80,7 +80,7 @@ assert.deepEqual(records, copy,
 
 Mix a list into a single record.
 
-### usage
+### Usage
 
 list(records).concat() -> record
 
