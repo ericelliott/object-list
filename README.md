@@ -128,3 +128,17 @@ assert.deepEqual(records, copy,
 'should not alter original list.');
 ```
 
+## Courses
+
+This was written for the ["Learn JavaScript with Eric Elliott"](https://ericelliottjs.com/) course series.
+
+Students will get a series of short videos, lots of interactive lessons explaining concepts in-depth, the ability to help and learn from each other, and a lot more.
+
+Here's a sneak peek at our members-only site:
+
+![Course homepage](https://cloud.githubusercontent.com/assets/364727/6434012/b3ff7a04-c03b-11e4-9b33-51889c74036f.png)
+
+![Student profile](https://cloud.githubusercontent.com/assets/364727/6434016/c7a0b802-c03b-11e4-9f4b-867464bd88c6.png)
+
+
+# [Learn JavaScript](https://ericelliottjs.com/)
