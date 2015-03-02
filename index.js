@@ -1,30 +1,28 @@
 'use strict';
 
 var
-  assign = require('lodash/object/assign'),
-  assert = require('assert');
+  assert = require('assert'),
+  lodash = require('lodash'),
+  cWhere = require('lodash').where;
 
 var
-  getByKey = function getByKey (arr, key) {
-    assert(typeof arr.filter === 'function',
-      'arr should suplly a .filter() method');
+  assign = lodash.assign,
+  getKeys = Object.keys;
 
-    var row = arr.filter(function (row) {
-      return Object.keys(row).indexOf(key) >= 0;
-    })[0];
-
-    return row ? row[key] : undefined;
+var
+  getByKey = function getByKey (collection, key) {
+    return lodash(collection).pluck(key).first();
   },
 
-  whitelist = function whitelist (arr, keyWhitelist) {
-    assert(typeof arr.filter === 'function',
-      'arr should supply .filter() method.');
+  whitelist = function whitelist (collection, keyWhitelist) {
+    assert(typeof collection.filter === 'function',
+      'collection should supply .filter() method.');
 
     assert(typeof keyWhitelist.indexOf === 'function',
       'keyWhitelist should supply .indexOf method.');
 
-    var whitelisted = arr.filter(function (row) {
-      var keys = Object.keys(row),
+    var whitelisted = collection.filter(function (record) {
+      var keys = getKeys(record),
 
         result = keys.filter(function (key) {
           return keyWhitelist.indexOf(key) >= 0;
@@ -36,21 +34,28 @@ var
     return whitelisted;
   },
 
-  concat = function concat (arr) {
-    return assign.apply(null, [{}].concat(arr));
+  concat = function concat (collection) {
+    return assign.apply(null, [{}].concat(collection));
+  },
+
+  where = function where (collection, predicates) {
+    return cWhere (collection, predicates);
   };
 
-var objectList = function objectList (arr) {
+var objectList = function objectList (collection) {
   return {
     getByKey: function (key) {
-      return getByKey.apply(null, [arr, key]);
+      return getByKey.apply(null, [collection, key]);
     },
     whitelist: function (keyWhitelist) {
-      return whitelist.apply(null, [arr, keyWhitelist]);
+      return whitelist.apply(null, [collection, keyWhitelist]);
     },
     concat: function () {
-      return concat(arr);
-    }
+      return concat(collection);
+    },
+    where: function (keyWhitelist) {
+      return where.apply(null, [collection, keyWhitelist]);
+    },
   };
 };
 
