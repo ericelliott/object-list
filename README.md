@@ -1,6 +1,6 @@
 # object-list
 
-Work with arrays of objects. A single object from an `object-list` is called a record.
+Treat arrays of objects like a db you can query. A single object from an `object-list` is called a record.
 
 ## Status
 
