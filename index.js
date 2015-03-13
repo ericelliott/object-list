@@ -38,8 +38,8 @@ var
     return assign.apply(null, [{}].concat(collection));
   },
 
-  where = function where (collection, predicates) {
-    return cWhere (collection, predicates);
+  where = function where (collection, query) {
+    return cWhere(collection, query);
   };
 
 var objectList = function objectList (collection) {
@@ -53,8 +53,8 @@ var objectList = function objectList (collection) {
     concat: function () {
       return concat(collection);
     },
-    where: function (keyWhitelist) {
-      return where.apply(null, [collection, keyWhitelist]);
+    where: function (query) {
+      return where.apply(null, [collection, query]);
     },
   };
 };
@@ -62,7 +62,8 @@ var objectList = function objectList (collection) {
 assign(objectList, {
   getByKey: getByKey,
   whitelist: whitelist,
-  concat: concat
+  concat: concat,
+  where: where
 });
 
 module.exports = objectList;

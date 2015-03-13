@@ -6,7 +6,8 @@
   "scripts": {
     "test": "tape test/index.js",
     "lint": "jshint .",
-    "validate": "npm run lint && npm test"
+    "validate": "npm run lint && npm test && npm outdated --depth 0",
+    "dev": "watch --wait=8 'npm run validate' ."
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,11 @@
   },
   "homepage": "https://github.com/ericelliott/object-list",
   "devDependencies": {
-    "jshint": "^2.6.3",
-    "tape": "^3.5.0"
+    "jshint": "2.6.3",
+    "tape": "3.5.0",
+    "watch": "0.14.0"
+  },
+  "dependencies": {
+    "lodash": "3.5.0"
   }
 }

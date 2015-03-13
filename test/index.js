@@ -1,6 +1,6 @@
 'use strict';
 
-var skip = function () {};
+// var skip = function () {};
 
 var
   test = require('tape'),
@@ -189,7 +189,7 @@ test('.where() single clause', function (assert) {
 });
 
 
-skip('.where() multiple clause', function (assert) {
+test('.where() multiple clause', function (assert) {
   // Find the order where Dennis ordered a cymbal.
   var records = [
       {
@@ -236,7 +236,9 @@ skip('.where() multiple clause', function (assert) {
 
     result = list(records).where({
       billingEmail: 'dennis@example.com',
-      sku: 'h617xrh'
+      lineItems: {
+        sku: 'h617xrh'
+      }
     }),
 
     expected = [
@@ -258,7 +260,7 @@ skip('.where() multiple clause', function (assert) {
   assert.deepEqual(result, expected,
     'should contain all the expected records.');
 
-  assert.equal(result.length, 2,
+  assert.equal(result.length, 1,
     'should not contain excluded records.');
 
   assert.deepEqual(records, copy,
