@@ -16,7 +16,7 @@ Developer preview.
 
 ## API Design Goals
 
-Only a few of these design goals have been met in the current implementation, so read this section like everything is prefixed with "eventually..."
+Only a few of these design goals have been met in the current implementation, so read this section like everything is prefixed with "eventually..." See [future](https://github.com/ericelliott/object-list/blob/master/docs/future.md).
 
 * A common API for object collections (e.g. arrays of objects). Wrappers for:
   - Array
