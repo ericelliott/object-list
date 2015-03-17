@@ -6,7 +6,7 @@ Treat arrays of objects like a db you can query. A single object from an `object
 
 You may be scratching your head right now and wondering how this is different from Underscore, Lodash, or Rx Observables. Astute observations. The implementation will likely lean heavily on both Lodash and Rx Observables.
 
-The difference is that this is intended to provide a universal facade for many types of object collections. It is an interface contract that will hopefully support a number of modular collection wrappers. Read on for more details.
+The difference is that this is intended to provide a universal facade for many types of object collections. It is an interface contract that will hopefully support a number of modular collection adapters. Read on for more details.
 
 
 ## Status
@@ -18,7 +18,7 @@ Developer preview.
 
 Only a few of these design goals have been met in the current implementation, so read this section like everything is prefixed with "eventually..." See [future](https://github.com/ericelliott/object-list/blob/master/docs/future.md).
 
-* A common API for object collections (e.g. arrays of objects). Wrappers for:
+* A common API for object collections (e.g. arrays of objects). Adapters for:
   - Array
   - Immutable.js List
   - Rx Observable
@@ -26,7 +26,7 @@ Only a few of these design goals have been met in the current implementation, so
   - Mongo client
   - Redis client
 * object-lists are immutable. Instead of mutating the source data, a new object-list will be returned.
-* Completely modular. Enable `require()` at the function level similar to `require('lodash/object/assign)`, etc... Compatibility wrappers for things that aren't required for hard dependencies should also be separate modules. Minimize browserify bundle weight.
+* Completely modular. Enable `require()` at the function level similar to `require('lodash/object/assign)`, etc... Compatibility transforms for things that aren't required for hard dependencies should also be separate modules. Minimize browserify bundle weight.
 * Node or Browser.
 * Provide ES6 `Array.prototype` compatible API. Almost anything that takes an array as input should be able to take an object-list, as well, provided the API does not rely on array mutation.
 * Use ES6 and make compiled ES5 version available on npm.
