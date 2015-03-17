@@ -59,6 +59,7 @@ let myList = list({ list: apiResource, async: true })
 * `.last()` - Like `.first()` / `.find()`, but return the last matching record.
 * `.head([n])` - Return the first record or first `n` records.
 * `.tail([n])` - Return the last record, or last `n` records.
+* `.reverse()` - Return the whole list in reverse order (last to first).
 * `.loop([cycles])` - Returns all values and then starts over from the beginning to produce an infinitely repeating stream. Will cause an infinite loop if `cylces` is omitted.
 * `.pingPong([cycles])` - Like loop, but when it reaches the end, it reverses order and plays back values from last to first. When it reaches the beginning, it reverses order again and plays back values from first to last... Will cause an infinite loop if `cylces` is omitted.
 * `.repeat(records [, n])` - Repeat supplied records `n` times.
