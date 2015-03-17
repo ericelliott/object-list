@@ -41,7 +41,7 @@ let myList = list({ list: apiResource, async: true })
 ```
 
 
-## Possible Future Methods
+## Method Ideas
 
 * All of ES6 `Array.prototype`, spec compatible.
 * `.push(record)`, `.add(record)` - Append the record to the list.
