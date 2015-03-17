@@ -16,6 +16,8 @@ Developer preview.
 
 ## API Design Goals
 
+Only a few of these design goals have been met in the current implementation, so read this section like everything is prefixed with "eventually..."
+
 * A common API for object collections (e.g. arrays of objects). Wrappers for:
   - Array
   - Immutable.js List
