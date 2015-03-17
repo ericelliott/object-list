@@ -26,6 +26,7 @@ Only a few of these design goals have been met in the current implementation, so
   - Mongo client
   - Redis client
 * object-lists are immutable. Instead of mutating the source data, a new object-list will be returned.
+* Completely modular. Enable `require()` at the function level. Compatibility wrappers for things that aren't required for hard dependencies should also be separate modules. Minimize browserify bundle weight.
 * Node or Browser.
 * Provide ES6 `Array.prototype` compatible API. Almost anything that takes an array as input should be able to take an object-list, as well, provided the API does not rely on array mutation.
 * Use ES6 and make compiled ES5 version available on npm.
