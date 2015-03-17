@@ -9,15 +9,15 @@ By default, the methods should be sync so that you can easily replace arrays wit
 
 Normally, methods are synchronous:
 
-```
-var myList = list([{a: 1}, {b: 2}, {c: 3}])
+```js
+let myList = list([{a: 1}, {b: 2}, {c: 3}])
   .reverse(); // [{c: 3}, {b: 2}, {a: 1}]
 ```
 
 But what happens when you're dealing with asynchronous data sources?
 
-```
-var myList = list({ list: apiResource, async: true })
+```js
+let myList = list({ list: apiResource, async: true })
   .reverse()
   .subscribe(onNext, onError, onCompleted);
 ```
@@ -26,10 +26,10 @@ When you pass in a siren-resource object, an API error (such as 400 - 500 range 
 
 Let's pass a lambda into the next handler:
 
-```
+```js
 // apiResource normally returns [{a: 1}, {b: 2}, {c: 3}]
 // for GET operation
-var myList = list({ list: apiResource, async: true })
+let myList = list({ list: apiResource, async: true })
   .reverse()
   .subscribe(function onNext(item) {
     console.log(item);
