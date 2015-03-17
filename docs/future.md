@@ -48,7 +48,7 @@ let myList = list({ list: apiResource, async: true })
 * `.remove(obj)` – Removes an item from the collection if it looks like the passed-in object (deepEqual).
 * `.removeWhere({key1: value, key2: value2...})` - Remove all objects that match the key:value where clauses.
 * `.removeSlice(startIndex, endIndex)` – Filter out a range of indexes. Basically the opposite of `.slice()` (return the filtered list instead of the sliced out subset).
-* `.distinct(predicate) - Returns only distinct records which satisfy the predicate function.
+* `.distinct(predicate)` - Returns only distinct records which satisfy the predicate function.
 * `.distinctWhere({key: value, key2: value2})` - Returns only distinct records which match all supplied where clauses.
 * `.sortBy({foo: 'descending'}, [fn])` – Sorts the list based on the property passed in using optional `[].sort()` compatible custom sort function.
 * `.at(index)`, `.recordAt(index)` – Returns the record at `index`.
