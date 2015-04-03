@@ -190,3 +190,37 @@ test('.where() multiple clause', function (assert) {
 
   assert.end();
 });
+
+test('.add() records to list', function (assert) {
+  var
+    copy = slice.call(records),
+
+    record = {
+      id: 'ci6r6aliv00008poxc2zgnjvf',
+      date: '2014-12-30 05:29:28',
+      billingEmail: 'dennis@example.com',
+      firstName: 'Dennis',
+      lastName: 'Chambers',
+      lineItems: {
+        name: 'Zildjian K Custom Organic Ride - 21"',
+        sku: 'h123xrh',
+        quantity: '1',
+        total: '379.95'
+      }
+    },
+
+    result = list(records).add(record),
+
+    expected = list(result).where({ id: 'ci6r6aliv00008poxc2zgnjvf' })[0];
+
+  assert.deepEqual(record, expected,
+    'should contain the new record');
+
+  assert.equal(result.length, 4,
+    'should contain all records');
+
+  assert.deepEqual(records, copy,
+    'should not alter original list');
+
+  assert.end();
+});

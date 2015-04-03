@@ -34,6 +34,10 @@ var
     return whitelisted;
   },
 
+  add = function add(collection, records) {
+    return collection.concat(records);
+  },
+
   concat = function concat (collection) {
     return assign.apply(null, [{}].concat(collection));
   },
@@ -56,6 +60,12 @@ var objectList = function objectList (collection) {
     where: function (query) {
       return where.apply(null, [collection, query]);
     },
+    add: function (records) {
+      return add.apply(null, [collection, records]);
+    },
+    push: function (records) {
+      return add.apply(null, [collection, records]);
+    }
   };
 };
 
