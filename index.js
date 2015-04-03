@@ -35,7 +35,8 @@ var
   },
 
   add = function add(collection, records) {
-    return collection.concat(records);
+    var newCollection = collection.concat(records);
+    return objectList(newCollection);
   },
 
   concat = function concat (collection) {
