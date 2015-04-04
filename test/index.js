@@ -334,9 +334,6 @@ test('.add() records to list', function (assert) {
   assert.deepEqual(record, expected,
     'should contain the new record');
 
-  // assert.equal(result.length, 4,
-  //   'should contain all records');
-
   assert.deepEqual(records, copy,
     'should not alter original list');
 
