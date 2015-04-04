@@ -11,6 +11,8 @@ var
   getKeys = Object.keys;
 
 var
+  objectList,
+
   getByKey = function getByKey (collection, key) {
     return lodash(collection).pluck(key).first();
   },
@@ -54,7 +56,7 @@ var
     return cWhere(collection, query);
   };
 
-var objectList = function objectList (options) {
+objectList = function objectList (options) {
   var
     collection,
     api = {
