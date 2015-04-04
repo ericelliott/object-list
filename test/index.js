@@ -339,3 +339,65 @@ test('.add() records to list', function (assert) {
 
   assert.end();
 });
+
+test('.add() async operation', function(assert) {
+  assert.plan(3);
+
+  var
+    records = [
+      {
+        "id": "ci6r6aliv00007poxc2zgnjvf",
+        "date": "2014-12-30 05:29:28",
+        "billingEmail": "dennis@example.com",
+        "firstName": "Dennis",
+        "lastName": "Chambers",
+        "lineItems": {
+          "name": "Zildjian K Custom Organic Ride - 21\"",
+          "sku": "h617xrh",
+          "quantity": "1",
+          "total": "379.95"
+        }
+      }
+    ],
+    copy = slice.call(records),
+
+    newRecord = {
+      id: 'ci6r6aliv00008poxc2zgnjvf',
+      date: '2014-12-30 05:29:28',
+      billingEmail: 'dennis@example.com',
+      firstName: 'Dennis',
+      lastName: 'Chambers',
+      lineItems: {
+        name: 'Zildjian K Custom Organic Ride - 21"',
+        sku: 'h123xrh',
+        quantity: '1',
+        total: '379.95'
+      }
+    },
+
+    result = list({
+      list: records,
+      async: true
+    });
+
+  result.add(newRecord);
+  result.subscribe(
+    function onNext(newCollection) {
+      var expected = list(newCollection).where({ id: 'ci6r6aliv00008poxc2zgnjvf' })[0];
+
+      assert.deepEqual(newRecord, expected,
+        'should contain the new record');
+
+      assert.deepEqual(records, copy,
+        'should not alter original list');
+    },
+    function onError(err) {
+      assert.ok(!err, 'should not throw an error');
+    },
+    function onCompleted() {
+      assert.ok(true, 'should call onCompleted callback');
+
+      assert.end();
+    }
+  );
+});
