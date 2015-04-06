@@ -383,7 +383,7 @@ test('.add() async operation', function(assert) {
   result.add(newRecord);
   result.subscribe(
     function onNext(newCollection) {
-      var expected = list(newCollection).where({ id: 'ci6r6aliv00008poxc2zgnjvf' })[0];
+      var expected = newCollection.where({ id: 'ci6r6aliv00008poxc2zgnjvf' })[0];
 
       assert.deepEqual(newRecord, expected,
         'should contain the new record');

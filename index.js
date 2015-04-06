@@ -41,7 +41,7 @@ var
     var newCollection = collection.concat(records);
 
     if (cb) {
-      cb(null, newCollection);
+      cb(null, objectList(newCollection));
       return;
     }
 
