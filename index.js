@@ -96,7 +96,7 @@ objectList = function objectList (options) {
         return add.apply(null, [collection, records]);
       },
       push: function () {
-        return api.add.apply(null, [].slice.call(arguments));
+        return api.add.apply(null, arguments);
       },
       get length () {
         return collection.length;
