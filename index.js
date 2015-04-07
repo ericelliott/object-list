@@ -22,6 +22,33 @@ var
 var
   objectList,
 
+  fnVersions = {
+    sync: {
+      add: function add(collection, records) {
+        var newCollection = collection.concat(records);
+
+        return objectList(newCollection);
+      }
+    },
+    async: {
+      add: function addAsync(collection, records, cb) {
+        var
+          deferred = Q.defer(),
+          promise = deferred.promise,
+
+          newCollection = objectList(collection);
+
+        // README: the following operation would be invoked from the callback for
+        // the async operation, when adapters get implemented
+        deferred.resolve(fnVersions.sync.add(collection, records));
+
+        newCollection.subscribe = subbable(promise);
+
+        return newCollection;
+      }
+    }
+  },
+
   getByKey = function getByKey (collection, key) {
     return lodash(collection).pluck(key).first();
   },
@@ -46,28 +73,6 @@ var
     return whitelisted;
   },
 
-  add = function add(collection, records) {
-    var newCollection = collection.concat(records);
-
-    return objectList(newCollection);
-  },
-
-  addAsync = function addAsync(collection, records, cb) {
-    var
-      deferred = Q.defer(),
-      promise = deferred.promise,
-
-      newCollection = objectList(collection);
-
-    // README: the following operation would be invoked from the callback for
-    // the async operation, when adapters get implemented
-    deferred.resolve(add(collection, records));
-
-    newCollection.subscribe = subbable(promise);
-
-    return newCollection;
-  },
-
   concat = function concat (collection) {
     return assign.apply(null, [{}].concat(collection));
   },
@@ -78,7 +83,9 @@ var
 
 objectList = function objectList (options) {
   var
-    collection,
+    collection = options.async ? options.list : options,
+    version = options.async ? 'async' : 'sync',
+
     api = {
       getByKey: function (key) {
         return getByKey.apply(null, [collection, key]);
@@ -93,7 +100,7 @@ objectList = function objectList (options) {
         return where.apply(null, [collection, keyWhitelist]);
       },
       add: function (records) {
-        return add.apply(null, [collection, records]);
+        return fnVersions[version].add.apply(null, [collection, records]);
       },
       push: function () {
         return api.add.apply(null, arguments);
@@ -102,14 +109,6 @@ objectList = function objectList (options) {
         return collection.length;
       }
     };
-
-  if (options.async) {
-    collection = options.list;
-
-    api.add = addAsync.bind(null, collection);
-  } else {
-    collection = options;
-  }
 
   return api;
 };
