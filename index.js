@@ -31,7 +31,7 @@ var
       }
     },
     async: {
-      add: function addAsync(collection, records, cb) {
+      add: function addAsync(collection, records) {
         var
           deferred = Q.defer(),
           promise = deferred.promise,
