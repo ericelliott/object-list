@@ -380,7 +380,7 @@ test('.add() async operation', function(assert) {
       async: true
     });
 
-  result.add(newRecord);
+  result = result.add(newRecord);
   result.subscribe(
     function onNext(newCollection) {
       var expected = newCollection.where({ id: 'ci6r6aliv00008poxc2zgnjvf' })[0];

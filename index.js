@@ -11,6 +11,15 @@ var
   getKeys = Object.keys;
 
 var
+  subbable = function subbable(promise) {
+    return function (onNext, onError, onCompleted) {
+      promise.then(onNext);
+      promise.catch(onError);
+      promise.finally(onCompleted);
+    };
+  };
+
+var
   objectList,
 
   getByKey = function getByKey (collection, key) {
@@ -37,15 +46,26 @@ var
     return whitelisted;
   },
 
-  add = function add(collection, records, cb) {
+  add = function add(collection, records) {
     var newCollection = collection.concat(records);
 
-    if (cb) {
-      cb(null, objectList(newCollection));
-      return;
-    }
-
     return objectList(newCollection);
+  },
+
+  addAsync = function addAsync(collection, records, cb) {
+    var
+      deferred = Q.defer(),
+      promise = deferred.promise,
+
+      newCollection = objectList(collection);
+
+    // README: the following operation would be invoked from the callback for
+    // the async operation, when adapters get implemented
+    deferred.resolve(add(collection, records));
+
+    newCollection.subscribe = subbable(promise);
+
+    return newCollection;
   },
 
   concat = function concat (collection) {
@@ -72,8 +92,8 @@ objectList = function objectList (options) {
       where: function (keyWhitelist) {
         return where.apply(null, [collection, keyWhitelist]);
       },
-      add: function (records, cb) {
-        return add.apply(null, [collection, records, cb]);
+      add: function (records) {
+        return add.apply(null, [collection, records]);
       },
       push: function () {
         return api.add.apply(null, [].slice.call(arguments));
@@ -86,17 +106,7 @@ objectList = function objectList (options) {
   if (options.async) {
     collection = options.list;
 
-    var
-      deferred = Q.defer(),
-      promise = deferred.promise;
-
-    api.add = lodash.partialRight(api.add, deferred.makeNodeResolver());
-
-    api.subscribe = function (onNext, onError, onCompleted) {
-      promise.then(onNext);
-      promise.catch(onError);
-      promise.finally(onCompleted);
-    };
+    api.add = addAsync.bind(null, collection);
   } else {
     collection = options;
   }
