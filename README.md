@@ -1,4 +1,4 @@
-# object-list
+# object-list [![Build Status](https://travis-ci.org/therealklanni/object-list.svg?branch=travis)](https://travis-ci.org/ericelliott/object-list)
 
 Treat arrays of objects like a db you can query. A single object from an `object-list` is called a record.
 
