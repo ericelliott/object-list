@@ -51,6 +51,20 @@ var
         newCollection.subscribe = createObserver(source);
 
         return newCollection;
+      },
+      remove: function removeAsync(collection, record) {
+        var
+          newCollection = objectList(collection),
+
+          // README: this is a temporary workaround to be replaced with
+          // .fromNodeCallback() or similar method when adapters get implemented
+          source = Rx.Observable.from([].concat(record), function (x) {
+            return fnVersions.sync.remove(collection, x);
+          });
+
+        newCollection.subscribe = createObserver(source);
+
+        return newCollection;
       }
     }
   },
