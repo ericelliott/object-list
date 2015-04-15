@@ -27,6 +27,14 @@ var
         var newCollection = collection.concat(records);
 
         return objectList(newCollection);
+      },
+      remove: function remove(collection, record) {
+        var newCollection = lodash.cloneDeep(collection);
+
+        lodash.remove(newCollection,
+          lodash.partial(lodash.isEqual, record));
+
+        return objectList(newCollection);
       }
     },
     async: {
@@ -102,6 +110,9 @@ objectList = function objectList (options) {
       },
       push: function () {
         return api.add.apply(null, arguments);
+      },
+      remove: function (records) {
+        return fnVersions[version].remove.apply(null, [collection, records]);
       },
       get length () {
         return collection.length;
