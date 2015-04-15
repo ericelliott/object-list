@@ -172,6 +172,9 @@ objectList = function objectList (options) {
       removeSlice: function (start, end) {
         return fnVersions[version].removeSlice.apply(null, [collection, start, end]);
       },
+      toArray: function () {
+        return lodash.cloneDeep(collection);
+      },
       get length () {
         return collection.length;
       }

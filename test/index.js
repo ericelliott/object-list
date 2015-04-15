@@ -90,3 +90,31 @@ test('.concat()', function (assert) {
 
   assert.end();
 });
+
+test('.toArray()', function (assert) {
+  var
+    records = [
+      {a: 'a'},
+      {b: 'b'},
+      {c: 'c'},
+      {c: 'override'}
+    ],
+    copy = slice.call(records),
+
+    newRecords = list(records).toArray(),
+
+    expected = [
+      {a: 'a'},
+      {b: 'b'},
+      {c: 'c'},
+      {c: 'override'}
+    ];
+
+  assert.deepEqual(newRecords, expected,
+    'should return a plain array');
+
+  assert.deepEqual(records, copy,
+    'should not alter original list.');
+
+  assert.end();
+});
