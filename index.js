@@ -42,6 +42,13 @@ var
             lodash.partial(lodash.find, recordsToRemove));
 
         return objectList(newCollection);
+      },
+      removeSlice: function removeSlice(collection, start, end) {
+        var recordsToRemove = lodash.slice(collection, start, end),
+          newCollection = lodash.reject(collection,
+            lodash.partial(lodash.find, recordsToRemove));
+
+        return objectList(newCollection);
       }
     },
     async: {
@@ -149,6 +156,9 @@ objectList = function objectList (options) {
       },
       removeWhere: function (query) {
         return fnVersions[version].removeWhere.apply(null, [collection, query]);
+      },
+      removeSlice: function (start, end) {
+        return fnVersions[version].removeSlice.apply(null, [collection, start, end]);
       },
       get length () {
         return collection.length;
