@@ -1,7 +1,7 @@
 'use strict';
 
 var
-  Q = require('q'),
+  Rx = require('rx'),
   assert = require('assert'),
   lodash = require('lodash'),
   cWhere = require('lodash').where;
@@ -11,11 +11,10 @@ var
   getKeys = Object.keys;
 
 var
-  subbable = function subbable(promise) {
-    return function (onNext, onError, onCompleted) {
-      promise.then(onNext);
-      promise.catch(onError);
-      promise.finally(onCompleted);
+  createObserver = function createObserver(source) {
+    return function () {
+      var observer = Rx.Observer.create.apply(Rx.Observer, arguments);
+      return source.subscribe(observer);
     };
   };
 
@@ -33,16 +32,15 @@ var
     async: {
       add: function addAsync(collection, records) {
         var
-          deferred = Q.defer(),
-          promise = deferred.promise,
+          newCollection = objectList(collection),
 
-          newCollection = objectList(collection);
+          // README: this is a temporary workaround to be replaced with
+          // .fromNodeCallback() or similar method when adapters get implemented
+          source = Rx.Observable.from([].concat(records), function (x) {
+            return objectList([x]);
+          });
 
-        // README: the following operation would be invoked from the callback for
-        // the async operation, when adapters get implemented
-        deferred.resolve(fnVersions.sync.add(collection, records));
-
-        newCollection.subscribe = subbable(promise);
+        newCollection.subscribe = createObserver(source);
 
         return newCollection;
       }
