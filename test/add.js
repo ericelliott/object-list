@@ -7,7 +7,7 @@ var
 var
   slice = [].slice;
 
-test('.add() records to list', function (assert) {
+test('.add() sync operation', function (assert) {
   var records = [
       {
         "id": "ci6r6aliv00007poxc2zgnjvf",
@@ -79,7 +79,7 @@ test('.add() records to list', function (assert) {
 });
 
 test('.add() async operation', function (assert) {
-  assert.plan(3);
+  assert.plan(4);
 
   var
     records = [
@@ -116,24 +116,24 @@ test('.add() async operation', function (assert) {
     result = list({
       list: records,
       async: true
-    });
+    }),
+
+    count = 0;
 
   result = result.add(newRecord);
   result.subscribe(
-    function onNext(newCollection) {
-      var expected = newCollection.where({ id: 'ci6r6aliv00008poxc2zgnjvf' })[0];
-
-      assert.deepEqual(newRecord, expected,
+    function onNext(item) {
+      assert.deepEqual(item, count ? newRecord : records[count++],
         'should contain the new record');
-
-      assert.deepEqual(records, copy,
-        'should not alter original list');
     },
     function onError(err) {
       assert.ok(!err, 'should not throw an error');
     },
     function onCompleted() {
       assert.ok(true, 'should call onCompleted callback');
+
+      assert.deepEqual(records, copy,
+        'should not alter original list');
 
       assert.end();
     }

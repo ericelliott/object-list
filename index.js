@@ -44,9 +44,11 @@ var
         return objectList(newCollection);
       },
       removeSlice: function removeSlice(collection, start, end) {
-        var recordsToRemove = lodash.slice(collection, start, end),
-          newCollection = lodash.reject(collection,
-            lodash.partial(lodash.find, recordsToRemove));
+        var newCollection = lodash(collection).cloneDeep(),
+          rest = newCollection.slice(end || newCollection.length);
+
+        newCollection.length = start < 0 ? newCollection.length + start : start;
+        [].push.apply(newCollection, rest);
 
         return objectList(newCollection);
       }
@@ -58,9 +60,7 @@ var
 
           // README: this is a temporary workaround to be replaced with
           // .fromNodeCallback() or similar method when adapters get implemented
-          source = Rx.Observable.from([].concat(records), function (x) {
-            return objectList([x]);
-          });
+          source = Rx.Observable.from(fnVersions.sync.add(collection, records).toArray());
 
         newCollection.subscribe = createObserver(source);
 
@@ -72,9 +72,7 @@ var
 
           // README: this is a temporary workaround to be replaced with
           // .fromNodeCallback() or similar method when adapters get implemented
-          source = Rx.Observable.from([].concat(record), function (x) {
-            return fnVersions.sync.remove(collection, x);
-          });
+          source = Rx.Observable.from(fnVersions.sync.remove(collection, record).toArray());
 
         newCollection.subscribe = createObserver(source);
 
@@ -86,19 +84,19 @@ var
 
           // README: this is a temporary workaround to be replaced with
           // .fromNodeCallback() or similar method when adapters get implemented
-          source = Rx.Observable.from([fnVersions.sync.removeWhere(collection, query)]);
+          source = Rx.Observable.from(fnVersions.sync.removeWhere(collection, query).toArray());
 
         newCollection.subscribe = createObserver(source);
 
         return newCollection;
       },
-      removeSlice: function removeSliceAsync(collection, query) {
+      removeSlice: function removeSliceAsync(collection, start, end) {
         var
           newCollection = objectList(collection),
 
           // README: this is a temporary workaround to be replaced with
           // .fromNodeCallback() or similar method when adapters get implemented
-          source = Rx.Observable.from([fnVersions.sync.removeSlice(collection, query)]);
+          source = Rx.Observable.from(fnVersions.sync.removeSlice(collection, start, end).toArray());
 
         newCollection.subscribe = createObserver(source);
 

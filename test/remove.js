@@ -79,7 +79,7 @@ test('.remove() sync operation', function (assert) {
 });
 
 test('.remove() async operation', function (assert) {
-  assert.plan(3);
+  assert.plan(4);
 
   var
     records = [
@@ -146,20 +146,18 @@ test('.remove() async operation', function (assert) {
 
   result = result.remove(record);
   result.subscribe(
-    function onNext(newCollection) {
-      var actual = newCollection.where({ id: 'ci6r6aliv00008poxc2zgnjvf' })[0];
-
-      assert.deepEqual(actual, undefined,
+    function onNext(item) {
+      assert.notDeepEqual(item, record,
         'should not contain the removed record');
-
-      assert.deepEqual(records, copy,
-        'should not alter original list');
     },
     function onError(err) {
       assert.ok(!err, 'should not throw an error');
     },
     function onCompleted() {
       assert.ok(true, 'should call onCompleted callback');
+
+      assert.deepEqual(records, copy,
+        'should not alter original list');
 
       assert.end();
     }
@@ -228,7 +226,7 @@ test('.removeWhere() sync operation', function (assert) {
 });
 
 test('.removeWhere() async operation', function (assert) {
-  assert.plan(3);
+  assert.plan(4);
 
   var
     records = [
@@ -285,20 +283,21 @@ test('.removeWhere() async operation', function (assert) {
 
   result = result.removeWhere(query);
   result.subscribe(
-    function onNext(newCollection) {
-      var actual = newCollection.where({ lastName: 'Chambers' })[0];
-
-      assert.deepEqual(actual, undefined,
+    function onNext(item) {
+      assert.notDeepEqual(item, records[0],
         'should not contain the removed record');
 
-      assert.deepEqual(records, copy,
-        'should not alter original list');
+      assert.notDeepEqual(item, records[2],
+        'should not contain the removed record');
     },
     function onError(err) {
       assert.ok(!err, 'should not throw an error');
     },
     function onCompleted() {
       assert.ok(true, 'should call onCompleted callback');
+
+      assert.deepEqual(records, copy,
+        'should not alter original list');
 
       assert.end();
     }
@@ -419,23 +418,18 @@ test('.removeSlice() async operation', function (assert) {
 
   result = result.removeSlice(1, 2);
   result.subscribe(
-    function onNext(newCollection) {
-      var actual = newCollection.where({ id: 'ci6r6aliv00008poxc2zgnjvf' })[0];
-
-      assert.deepEqual(actual, undefined,
+    function onNext(item) {
+      assert.notDeepEqual(item, records[1],
         'should not contain the removed record');
-
-      assert.ok(newCollection.length < copy.length,
-        'newCollection should have less records than copy');
-
-      assert.deepEqual(records, copy,
-        'should not alter original list');
     },
     function onError(err) {
       assert.ok(!err, 'should not throw an error');
     },
     function onCompleted() {
       assert.ok(true, 'should call onCompleted callback');
+
+      assert.deepEqual(records, copy,
+        'should not alter original list');
 
       assert.end();
     }
