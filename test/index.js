@@ -1,7 +1,5 @@
 'use strict';
 
-// var skip = function () {};
-
 var
   test = require('tape'),
   list = require('../index.js');
