@@ -4,7 +4,7 @@
   "description": "Treat arrays of objects like a db you can query.",
   "main": "index.js",
   "scripts": {
-    "test": "tape test/index.js",
+    "test": "tape test/*.js",
     "lint": "jshint .",
     "validate": "npm run lint && npm test && npm outdated --depth 0",
     "dev": "watch --wait=8 'npm run validate' ."
