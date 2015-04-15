@@ -72,6 +72,18 @@ var
         newCollection.subscribe = createObserver(source);
 
         return newCollection;
+      },
+      removeWhere: function removeWhereAsync(collection, query) {
+        var
+          newCollection = objectList(collection),
+
+          // README: this is a temporary workaround to be replaced with
+          // .fromNodeCallback() or similar method when adapters get implemented
+          source = Rx.Observable.from([fnVersions.sync.removeWhere(collection, query)]);
+
+        newCollection.subscribe = createObserver(source);
+
+        return newCollection;
       }
     }
   },
