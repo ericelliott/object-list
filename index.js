@@ -35,6 +35,13 @@ var
           lodash.partial(lodash.isEqual, record));
 
         return objectList(newCollection);
+      },
+      removeWhere: function removeWhere(collection, query) {
+        var recordsToRemove = cWhere(collection, query),
+          newCollection = lodash.reject(collection,
+            lodash.partial(lodash.find, recordsToRemove));
+
+        return objectList(newCollection);
       }
     },
     async: {
@@ -127,6 +134,9 @@ objectList = function objectList (options) {
       },
       remove: function (records) {
         return fnVersions[version].remove.apply(null, [collection, records]);
+      },
+      removeWhere: function (query) {
+        return fnVersions[version].removeWhere.apply(null, [collection, query]);
       },
       get length () {
         return collection.length;
