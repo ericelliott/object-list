@@ -1,6 +1,6 @@
 {
   "name": "object-list",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Treat arrays of objects like a db you can query.",
   "main": "index.js",
   "scripts": {
