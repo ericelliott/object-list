@@ -27,6 +27,30 @@ var
         var newCollection = collection.concat(records);
 
         return objectList(newCollection);
+      },
+      remove: function remove(collection, record) {
+        var newCollection = lodash.cloneDeep(collection);
+
+        lodash.remove(newCollection,
+          lodash.partial(lodash.isEqual, record));
+
+        return objectList(newCollection);
+      },
+      removeWhere: function removeWhere(collection, query) {
+        var recordsToRemove = cWhere(collection, query),
+          newCollection = lodash.reject(collection,
+            lodash.partial(lodash.find, recordsToRemove));
+
+        return objectList(newCollection);
+      },
+      removeSlice: function removeSlice(collection, start, end) {
+        var newCollection = lodash(collection).cloneDeep(),
+          rest = newCollection.slice(end || newCollection.length);
+
+        newCollection.length = start < 0 ? newCollection.length + start : start;
+        [].push.apply(newCollection, rest);
+
+        return objectList(newCollection);
       }
     },
     async: {
@@ -36,9 +60,43 @@ var
 
           // README: this is a temporary workaround to be replaced with
           // .fromNodeCallback() or similar method when adapters get implemented
-          source = Rx.Observable.from([].concat(records), function (x) {
-            return objectList([x]);
-          });
+          source = Rx.Observable.from(fnVersions.sync.add(collection, records).toArray());
+
+        newCollection.subscribe = createObserver(source);
+
+        return newCollection;
+      },
+      remove: function removeAsync(collection, record) {
+        var
+          newCollection = objectList(collection),
+
+          // README: this is a temporary workaround to be replaced with
+          // .fromNodeCallback() or similar method when adapters get implemented
+          source = Rx.Observable.from(fnVersions.sync.remove(collection, record).toArray());
+
+        newCollection.subscribe = createObserver(source);
+
+        return newCollection;
+      },
+      removeWhere: function removeWhereAsync(collection, query) {
+        var
+          newCollection = objectList(collection),
+
+          // README: this is a temporary workaround to be replaced with
+          // .fromNodeCallback() or similar method when adapters get implemented
+          source = Rx.Observable.from(fnVersions.sync.removeWhere(collection, query).toArray());
+
+        newCollection.subscribe = createObserver(source);
+
+        return newCollection;
+      },
+      removeSlice: function removeSliceAsync(collection, start, end) {
+        var
+          newCollection = objectList(collection),
+
+          // README: this is a temporary workaround to be replaced with
+          // .fromNodeCallback() or similar method when adapters get implemented
+          source = Rx.Observable.from(fnVersions.sync.removeSlice(collection, start, end).toArray());
 
         newCollection.subscribe = createObserver(source);
 
@@ -102,6 +160,18 @@ objectList = function objectList (options) {
       },
       push: function () {
         return api.add.apply(null, arguments);
+      },
+      remove: function (records) {
+        return fnVersions[version].remove.apply(null, [collection, records]);
+      },
+      removeWhere: function (query) {
+        return fnVersions[version].removeWhere.apply(null, [collection, query]);
+      },
+      removeSlice: function (start, end) {
+        return fnVersions[version].removeSlice.apply(null, [collection, start, end]);
+      },
+      toArray: function () {
+        return lodash.cloneDeep(collection);
       },
       get length () {
         return collection.length;
