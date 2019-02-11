@@ -2,6 +2,8 @@
 
 Treat arrays of objects like a db you can query. A single object from an `object-list` is called a record.
 
+## Status - DEPRECATED - Use [lenses](https://medium.com/javascript-scene/lenses-b85976cb0534) or [transducers](https://medium.com/javascript-scene/transducers-efficient-data-processing-pipelines-in-javascript-7985330fe73d) instead. (Both abstract away from the underlying data structures).
+
 ## A common API for object collections
 
 You may be scratching your head right now and wondering how this is different from Underscore, Lodash, or Rx Observables. Astute observations. The implementation will likely lean heavily on both Lodash and Rx Observables.
